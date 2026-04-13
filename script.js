@@ -142,20 +142,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            const message = document.querySelector('.form-message');
             const btn = contactForm.querySelector('button[type="submit"]');
+
             const originalText = btn.innerHTML;
-            
+
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             btn.disabled = true;
+
 
             setTimeout(() => {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
-                document.querySelector('.form-message.success').style.display = 'block';
+                message.classList.add('success');
                 contactForm.reset();
-                
+
                 setTimeout(() => {
-                    document.querySelector('.form-message.success').style.display = 'none';
+                    message.classList.remove('success');
                 }, 5000);
             }, 1500);
         });
