@@ -164,3 +164,49 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+// <!-- Forminit SDK -->
+
+  const forminit = new Forminit();
+  const FORM_ID = "4jtawhfx8w6";
+
+  const form = document.getElementById("contact-form");
+  const messageBox = document.getElementById("form-message");
+  const submitButton = form.querySelector('button[type="submit"]');
+  const submitText = document.getElementById("submit-text");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    // Loading state
+    submitButton.disabled = true;
+    submitText.innerHTML = "Sending...";
+    messageBox.innerHTML = "";
+
+    const formData = new FormData(form);
+
+     const { error } = await forminit.submit(FORM_ID, formData);
+
+    // Reset button
+    submitButton.disabled = false;
+    submitText.innerHTML =
+      'Submit Request <i class="fas fa-solid fa-paper-plane"></i>';
+
+    if (error) {
+      messageBox.innerHTML = `
+        <i class="fas fa-exclamation-circle"></i>
+        ${error.message}
+      `;
+      messageBox.style.color = "#ff4d4f";
+      return;
+    }
+
+    // Success
+    messageBox.innerHTML = `
+      <i class="fas fa-solid fa-circle-check"></i>
+      Thank you! Your message has been sent successfully.<br>
+      We will get back to you soon.
+    `;
+    messageBox.style.color = "#22c55e";
+
+    form.reset();
+  });
