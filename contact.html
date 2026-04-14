@@ -161,8 +161,10 @@
 
     const formData = new FormData(form);
 
-     const { error } = await forminit.submit(FORM_ID, formData);
+     const response = await forminit.submit(FORM_ID, formData);
+console.log(response);
 
+const { error } = response;
     // Reset button
     submitButton.disabled = false;
     submitText.innerHTML =
