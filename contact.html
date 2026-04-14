@@ -152,52 +152,43 @@
   const submitButton = form.querySelector('button[type="submit"]');
   const submitText = document.getElementById("submit-text");
 
-  let isSubmitting = false;
-
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
-    if (isSubmitting) return;
 
-    isSubmitting = true;
+    // Loading state
     submitButton.disabled = true;
     submitText.innerHTML = "Sending...";
     messageBox.innerHTML = "";
 
-    try {
-      const formData = new FormData(form);
-      const { error } = await forminit.submit(FORM_ID, formData);
+    const formData = new FormData(form);
 
-      if (error) {
-        messageBox.innerHTML = `
-          <i class="fas fa-exclamation-circle"></i>
-          ${error.message}
-        `;
-        messageBox.style.color = "#ff4d4f";
-        return;
-      }
+     const { error } = await forminit.submit(FORM_ID, formData);
 
-      messageBox.innerHTML = `
-        <i class="fas fa-circle-check"></i>
-        Thank you! Your message has been sent successfully.<br>
-        We will get back to you soon.
-      `;
-      messageBox.style.color = "#22c55e";
-      form.reset();
-    } catch (err) {
+    // Reset button
+    submitButton.disabled = false;
+    submitText.innerHTML =
+      'Submit Request <i class="fas fa-solid fa-paper-plane"></i>';
+
+    if (error) {
       messageBox.innerHTML = `
         <i class="fas fa-exclamation-circle"></i>
-        Something went wrong. Please try again.
+        ${error.message}
       `;
       messageBox.style.color = "#ff4d4f";
-    } finally {
-      submitButton.disabled = false;
-      submitText.innerHTML =
-        'Submit Request <i class="fas fa-paper-plane"></i>';
-      isSubmitting = false;
+      return;
     }
+
+    // Success
+    messageBox.innerHTML = `
+      <i class="fas fa-solid fa-circle-check"></i>
+      Thank you! Your message has been sent successfully.<br>
+      We will get back to you soon.
+    `;
+    messageBox.style.color = "#22c55e";
+
+    form.reset();
   });
 </script>
-
                 <!-- Contact Info Space -->
                 <div data-aos="fade-left">
                     <h2 style="font-size: 30px; margin-bottom: 30px;">Contact <span class="gradient-text">Info</span>
