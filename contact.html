@@ -126,10 +126,7 @@
     </div>
 
     <!-- Status -->
-    <div class="form-message">
-                            <i class="fa-solid fa-circle-check"></i> Thank you! Your message has been sent successfully.
-                            We will get back to you soon.
-                        </div>
+    <div id="form-message" class="form-message"></div>
     <!-- Submit -->
     <button
       type="submit"
@@ -149,9 +146,9 @@
   const FORM_ID = "4jtawhfx8w6";
 
   const form = document.getElementById("contact-form");
-  const messageBox = document.getElementById("form-message");
   const submitButton = form.querySelector('button[type="submit"]');
   const submitText = document.getElementById("submit-text");
+  const messageBox = document.getElementById("form-message");
 
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -163,10 +160,8 @@
 
     const formData = new FormData(form);
 
-     const response = await forminit.submit(FORM_ID, formData);
-       console.log(response);
-
-      const { error } = response;
+     const { error } = response;
+      
     // Reset button
     submitButton.disabled = false;
     submitText.innerHTML =
