@@ -113,7 +113,7 @@
     </div>
 
     <!-- Message -->
-    <div class="form-group">
+    <div class=".form-group">
       <label for="message">Your Message *</label>
       <textarea
         id="message"
@@ -162,9 +162,9 @@
     const formData = new FormData(form);
 
      const response = await forminit.submit(FORM_ID, formData);
-console.log(response);
+       console.log(response);
 
-const { error } = response;
+      const { error } = response;
     // Reset button
     submitButton.disabled = false;
     submitText.innerHTML =
