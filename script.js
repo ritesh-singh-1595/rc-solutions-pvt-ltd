@@ -138,11 +138,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- 6. Form Submission Simulation ---
-    const contactForm = document.querySelector('contact-form');
+    const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const message = document.querySelector('form-message');
+            const message = document.querySelector('.form-message');
            const btn = contactForm.querySelector('button[type="submit"]');
 
             const originalText = btn.innerHTML;
