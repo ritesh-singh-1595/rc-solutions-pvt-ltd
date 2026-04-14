@@ -155,17 +155,12 @@
 
     // Loading state
     submitButton.disabled = true;
-    submitText.innerHTML = "Sending...";
+    submitText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
     messageBox.innerHTML = "";
 
     const formData = new FormData(form);
 
      const { error } = response;
-      
-    // Reset button
-    submitButton.disabled = false;
-    submitText.innerHTML =
-      'Submit Request <i class="fas fa-solid fa-paper-plane"></i>';
 
     if (error) {
       messageBox.innerHTML = `
@@ -175,16 +170,30 @@
       messageBox.style.color = "#ff4d4f";
       return;
     }
-
-    // Success
+      // Success
     messageBox.innerHTML = `
-      <i class="fas fa-solid fa-circle-check"></i>
+      <i class="fas fa-solid fa-paper-plane"></i>
       Thank you! Your message has been sent successfully.<br>
       We will get back to you soon.
     `;
     messageBox.style.color = "#22c55e";
+    setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                messagebox.classList.add('success');
+                form.reset();
+      // Reset button
+    submitButton.disabled = false;
+    submitText.innerHTML =
+      'Submit Request <i class="fas fa-solid fa-paper-plane"></i>';
+      ///////////
+const btn = contactForm.querySelector('button[type="submit"]');
 
-    form.reset();
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+    
   });
 </script>
                 <!-- Contact Info Space -->
