@@ -162,8 +162,7 @@
 
     const formData = new FormData(form);
 
-    const { data, redirectUrl, error } =
-      await forminit.submit(FORM_ID, formData);
+     const { error } = await forminit.submit(FORM_ID, formData);
 
     // Reset button
     submitButton.disabled = false;
