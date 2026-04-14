@@ -143,7 +143,12 @@ document.addEventListener("DOMContentLoaded", () => {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const message = document.querySelector('.form-message');
-            const btn = contactForm.querySelector('button[type="submit"]');
+           const message = document.querySelector('.form-message');
+
+if (message) {
+  message.textContent = "Message sent successfully!";
+  message.classList.add('success');
+}
 
             const originalText = btn.innerHTML;
 
