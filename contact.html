@@ -47,59 +47,148 @@
         <div class="container">
             <div class="contact-grid">
 
-                <!-- Contact Form -->
-                <div class="glass-card" data-aos="fade-right">
-                    <h2 style="font-size: 30px; margin-bottom: 30px;">Send a <span class="gradient-text">Message</span>
-                    </h2>
-                    <form class="contact-form" action="https://formspree.io/f/xojyqnyg" method="POST">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div class="form-group">
-                                <label for="name">Full Name *</label>
-                                <input type="text" id="name" name="name" class="form-control" required
-                                    placeholder="John Doe">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email Address *</label>
-                                <input type="email" id="email" name="email" class="form-control" required
-                                    placeholder="john@company.com">
-                            </div>
-                        </div>
+               <!-- Contact Form -->
+<div class="glass-card" data-aos="fade-right">
+  <h2 style="font-size: 30px; margin-bottom: 30px;">
+    Send a <span class="gradient-text">Message</span>
+  </h2>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div class="form-group">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" class="form-control"
-                                    placeholder="+91 98765 43210">
-                            </div>
-                            <div class="form-group">
-                                <label for="service">Service Included</label>
-                                <select id="service" name="service" class="form-control"
-                                    style="color: var(--text-secondary);">
-                                    <option value="" disabled selected>-- Select --</option>
-                                    <option value="research">Market Research</option>
-                                    <option value="audit">Audits</option>
-                                    <option value="survey">Data Collection</option>
-                                    <option value="other">Other Inquiry</option>
-                                </select>
-                            </div>
-                        </div>
+  <form id="contact-form">
+    <!-- Row 1 -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="form-group">
+        <label for="fullName">Full Name *</label>
+        <input
+          type="text"
+          id="fullName"
+          name="fi-sender-firstName"
+          class="form-control"
+          placeholder="John Doe"
+          required
+        />
+      </div>
 
-                        <div class="form-group">
-                            <label for="message">Your Message *</label>
-                            <textarea id="message" name="message" class="form-control" required
-                                placeholder="How can we help you?"></textarea>
-                        </div>
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input
+          type="email"
+          id="email"
+          name="fi-sender-email"
+          class="form-control"
+          placeholder="john@company.com"
+          required
+        />
+      </div>
+    </div>
 
-                        <div class="form-message">
-                            <i class="fa-solid fa-circle-check"></i> Thank you! Your message has been sent successfully.
-                            We will get back to you soon.
-                        </div>
+    <!-- Row 2 -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input
+          type="tel"
+          id="phone"
+          name="fi-phone-phone"
+          class="form-control"
+          placeholder="+91 98765 43210"
+        />
+      </div>
 
-                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
-                            Submit Request <i class="fa-solid fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div>
+      <div class="form-group">
+        <label for="service">Service Included</label>
+        <select
+          id="service"
+          name="fi-select-service"
+          class="form-control"
+          required
+          style="color: var(--text-secondary);"
+        >
+          <option value="" disabled selected>Select one</option>
+          <option value="research">Market Research</option>
+          <option value="audit">Audits</option>
+          <option value="survey">Data Collection</option>
+          <option value="other">Other Inquiry</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div class="form-group">
+      <label for="message">Your Message *</label>
+      <textarea
+        id="message"
+        name="fi-text-message"
+        class="form-control"
+        rows="5"
+        placeholder="How can we help you?"
+        required
+      ></textarea>
+    </div>
+
+    <!-- Status -->
+    <div id="form-message" class="form-message"></div>
+
+    <!-- Submit -->
+    <button
+      type="submit"
+      class="btn btn-primary"
+      style="width: 100%; margin-top: 10px;"
+    >
+      <span id="submit-text">
+        Submit Request <i class="fas fa-solid fa-paper-plane"></i>
+      </span>
+    </button>
+  </form>
+</div>
+
+<!-- Forminit SDK -->
+<script src="https://forminit.com/sdk/v1/forminit.js"></script>
+<script>
+  const forminit = new Forminit();
+  const FORM_ID = "4jtawhfx8w6";
+
+  const form = document.getElementById("contact-form");
+  const messageBox = document.getElementById("form-message");
+  const submitButton = form.querySelector('button[type="submit"]');
+  const submitText = document.getElementById("submit-text");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    // Loading state
+    submitButton.disabled = true;
+    submitText.innerHTML = "Sending...";
+    messageBox.innerHTML = "";
+
+    const formData = new FormData(form);
+
+    const { error } = await forminit.submit(FORM_ID, formData);
+
+    // Reset button
+    submitButton.disabled = false;
+    submitText.innerHTML =
+      'Submit Request <i class="fas fa-solid fa-paper-plane"></i>';
+
+    if (error) {
+      messageBox.innerHTML = `
+        <i class="fas fa-exclamation-circle"></i>
+        ${error.message}
+      `;
+      messageBox.style.color = "#ff4d4f";
+      return;
+    }
+
+    // Success
+    messageBox.innerHTML = `
+      <i class="fas fa-solid fa-circle-check"></i>
+      Thank you! Your message has been sent successfully.<br>
+      We will get back to you soon.
+    `;
+    messageBox.style.color = "#22c55e";
+
+    form.reset();
+  });
+</script>
 
                 <!-- Contact Info Space -->
                 <div data-aos="fade-left">
