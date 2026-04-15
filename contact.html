@@ -170,6 +170,11 @@
       messageBox.style.color = "#ff4d4f";
       return;
     }
+      // Reset button
+    submitButton.disabled = false;
+    submitText.innerHTML =
+      'Submit Request <i class="fas fa-solid fa-paper-plane"></i>';
+      //
       // Success
     messageBox.innerHTML = `
       <i class="fas fa-solid fa-paper-plane"></i>
@@ -182,11 +187,6 @@
                 btn.disabled = false;
                 messagebox.classList.add('success');
                 form.reset();
-      // Reset button
-    submitButton.disabled = false;
-    submitText.innerHTML =
-      'Submit Request <i class="fas fa-solid fa-paper-plane"></i>';
-      //
     
   });
 </script>
