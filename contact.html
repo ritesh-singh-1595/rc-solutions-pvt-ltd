@@ -153,14 +153,15 @@
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    // Loading state
     submitButton.disabled = true;
     submitText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
     messageBox.innerHTML = "";
 
     const formData = new FormData(form);
 
-     const { error } = response;
+    // ✅ FIX: actually send data
+    const response = await forminit.submit(FORM_ID, formData);
+    const { error } = response;
 
     if (error) {
       messageBox.innerHTML = `
@@ -168,26 +169,26 @@
         ${error.message}
       `;
       messageBox.style.color = "#ff4d4f";
+
+      submitButton.disabled = false;
+      submitText.innerHTML = "Submit Request";
       return;
     }
-      // Reset button
-    submitButton.disabled = false;
-    submitText.innerHTML =
-      'Submit Request <i class="fas fa-solid fa-paper-plane"></i>';
-      //
-      // Success
+
+    // Success
     messageBox.innerHTML = `
-      <i class="fas fa-solid fa-paper-plane"></i>
+      <i class="fas fa-paper-plane"></i>
       Thank you! Your message has been sent successfully.<br>
       We will get back to you soon.
     `;
     messageBox.style.color = "#22c55e";
+
     setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                messagebox.classList.add('success');
-                form.reset();
-    
+      submitButton.disabled = false;
+      submitText.innerHTML =
+        'Submit Request <i class="fas fa-paper-plane"></i>';
+      form.reset();
+    }, 2000);
   });
 </script>
                 <!-- Contact Info Space -->
